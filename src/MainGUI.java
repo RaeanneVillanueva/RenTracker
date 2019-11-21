@@ -19,6 +19,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Component;
 
+//hello im in git
+
 public class MainGUI extends JFrame {
 
 	private JPanel contentPane;
