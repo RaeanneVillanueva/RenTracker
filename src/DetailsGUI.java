@@ -16,7 +16,7 @@ public class DetailsGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txt_name, parking_txt, rentDue_txt, rentAmt_txt, contractStrt_txt;
 	private JLabel unit_lbl;
-	private JButton btnSave, btnCancel;
+	private JButton btnSave, btnDelete;
 
 	/**
 	 * Launch the application.
@@ -87,25 +87,80 @@ public class DetailsGUI extends JFrame {
 		contentPane.add(unit_lbl);
 		
 		btnSave = new JButton("Save");
-		btnSave.setBounds(64, 294, 89, 23);
+		btnSave.setBounds(67, 290, 89, 23);
 		contentPane.add(btnSave);
 		
-		btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(199, 294, 89, 23);
-		contentPane.add(btnCancel);
+		btnDelete = new JButton("Delete Details");
+		btnDelete.setBounds(191, 290, 116, 23);
+		contentPane.add(btnDelete);
 	}
 	
-	public void setUnitLblText(String unit) {
-		unit_lbl.setText(unit);
+	public String getName() {
+		return txt_name.getText();
+	}
+
+	public void setName(String txt_name) {
+		this.txt_name.setText(txt_name);
+	}
+
+	public String getParking() {
+		return parking_txt.getText();
+	}
+
+	public void setParking(String parking_txt) {
+		this.parking_txt.setText(parking_txt);
+	}
+
+	public String getRentDue() {
+		return rentDue_txt.getText();
+	}
+
+	public void setRentDue(String rentDue_txt) {
+		this.rentDue_txt.setText(rentDue_txt);
+	}
+
+	public String getRentAmt() {
+		return rentAmt_txt.getText();
+	}
+
+	public void setRentAmt(String rentAmt_txt) {
+		this.rentAmt_txt.setText(rentAmt_txt);
+	}
+
+	public String getContractStrt() {
+		return contractStrt_txt.getText();
+	}
+
+	public void setContractStrt(String contractStrt_txt) {
+		this.contractStrt_txt.setText(contractStrt_txt);
 	}
 	
+	public void clearAllTextFields() {
+		this.txt_name.setText("");
+		this.contractStrt_txt.setText("");
+		this.rentAmt_txt.setText("");
+		this.rentDue_txt.setText("");
+		this.parking_txt.setText("");
+		
+	}
+
+	public String getUnitLbl() {
+		return unit_lbl.getText();
+	}
+
+	public void setUnitLbl(String unit_lbl) {
+		this.unit_lbl.setText(unit_lbl);;
+	}
+	
+	public JButton getDeleteButton() {
+		return this.btnDelete;
+	}
+
 	public void btnSaveListener(ActionListener listenerForBtnSave) {
 		btnSave.addActionListener(listenerForBtnSave);
 	}
 	
-	public void btnCancelListener(ActionListener listenerForBtnCancel) {
-		btnSave.addActionListener(listenerForBtnCancel);
+	public void btnDeleteListener(ActionListener listenerForBtnDelete) {
+		btnDelete.addActionListener(listenerForBtnDelete);
 	}
-	
-	
 }
