@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class RenTrackingController {
 
@@ -32,6 +34,8 @@ public class RenTrackingController {
 		
 		detailsGUI.btnSaveListener(new ListenerForBtnSave());
 		detailsGUI.btnDeleteListener(new ListenerForBtnDelete());
+		detailsGUI.addTxtFieldDocumentListeners(new ListenerForTxtFields());
+		
 	}
 	
 	
@@ -88,10 +92,14 @@ public class RenTrackingController {
 			if(index < 0) {
 				detailsGUI.clearAllTextFields();
 				detailsGUI.getDeleteButton().setEnabled(false);
+				detailsGUI.getSaveBtn().setEnabled(false);
+				
 				detailsGUI.setVisible(true);
 			}else {
 				detailsGUI.clearAllTextFields();
 				detailsGUI.getDeleteButton().setEnabled(true);
+				detailsGUI.getSaveBtn().setEnabled(false);
+				
 				detailsGUI.setName(rooms.get(index).getTenantName());
 				detailsGUI.setContractStrt(rooms.get(index).getContracStrt());
 				detailsGUI.setRentAmt(rooms.get(index).getRentAmt());
@@ -106,8 +114,7 @@ public class RenTrackingController {
 	class ListenerForBtnSave implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			
+		public void actionPerformed(ActionEvent e) {	
 			
 			String unit = detailsGUI.getUnitLbl();
 			String tenantName = detailsGUI.getName();
@@ -115,12 +122,25 @@ public class RenTrackingController {
 			String rentAmt = detailsGUI.getRentAmt();
 			String rentDue = detailsGUI.getRentDue();
 			String parking = detailsGUI.getParking();
+			int index = getRoomIndex(unit);
 			
-			Room room = new Room(unit,tenantName, contractStrt, rentAmt, rentDue, parking);
-			rooms.add(room);
-			mainGUI.btnTaken(unit);
 			
-			detailsGUI.setVisible(false);
+			if(index < 0) {
+				Room room = new Room(unit,tenantName, contractStrt, rentAmt, rentDue, parking);
+				rooms.add(room);
+				mainGUI.btnTaken(unit);
+				detailsGUI.setVisible(false);
+				
+			}else {
+				rooms.get(index).setContracStrt(contractStrt);
+				rooms.get(index).setTenantName(tenantName);
+				rooms.get(index).setRentAmt(rentAmt);
+				rooms.get(index).setRentDue(rentDue);
+				rooms.get(index).setParking(parking);
+				detailsGUI.setVisible(false);
+			}
+			
+			printRooms();
 			
 		}
 	}
@@ -137,8 +157,33 @@ public class RenTrackingController {
 			rooms.remove(index);
 			detailsGUI.clearAllTextFields();
 			mainGUI.btnAvailable(unit);
+			detailsGUI.setVisible(false);
+			
+			printRooms();
 
 		}
+	}
+	
+	class ListenerForTxtFields implements DocumentListener {
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			detailsGUI.getSaveBtn().setEnabled(true);
+			
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			detailsGUI.getSaveBtn().setEnabled(true);
+			
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			detailsGUI.getSaveBtn().setEnabled(true);
+			
+		}
+		
 	}
 	
 	public int getRoomIndex(String unit) {

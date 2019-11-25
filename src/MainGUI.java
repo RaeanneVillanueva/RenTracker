@@ -20,6 +20,9 @@ import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Component;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 //hello im in git
 
@@ -69,6 +72,18 @@ public class MainGUI extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 837, 452);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnExport = new JMenu("Export");
+		menuBar.add(mnExport);
+		
+		JMenuItem mntmExportToExcel = new JMenuItem("Export to Excel");
+		mnExport.add(mntmExportToExcel);
+		
+		JMenuItem mntmExportToCsv = new JMenuItem("Export to CSV");
+		mnExport.add(mntmExportToCsv);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -492,6 +507,4 @@ public class MainGUI extends JFrame {
 			}
 		}
 	}
-	
-	
 }

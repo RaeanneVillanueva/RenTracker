@@ -1,12 +1,15 @@
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentListener;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.TextListener;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -155,6 +158,10 @@ public class DetailsGUI extends JFrame {
 	public JButton getDeleteButton() {
 		return this.btnDelete;
 	}
+	
+	public JButton getSaveBtn() {
+		return this.btnSave;
+	}
 
 	public void btnSaveListener(ActionListener listenerForBtnSave) {
 		btnSave.addActionListener(listenerForBtnSave);
@@ -163,4 +170,17 @@ public class DetailsGUI extends JFrame {
 	public void btnDeleteListener(ActionListener listenerForBtnDelete) {
 		btnDelete.addActionListener(listenerForBtnDelete);
 	}
+	
+	public void addTxtFieldDocumentListeners (DocumentListener listenerForTxtFields) {
+		Component[] txtFields = contentPane.getComponents();
+		
+		for(Component component: txtFields) {
+			
+			if(component instanceof JTextField) {
+				JTextField txtField = (JTextField) component;
+				txtField.getDocument().addDocumentListener(listenerForTxtFields);
+			}
+		}
+	}
+	
 }
