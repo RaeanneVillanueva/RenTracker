@@ -18,16 +18,19 @@ import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JTable;
 
 //hello im in git
 
 public class MainGUI extends JFrame {
-
+	JMenuItem mntmTableView;
 	private JPanel contentPane;
 	JPanel nav_bar, card_container;
 	JButton second_floor, third_floor, fourth_floor, commercial, parking;
@@ -38,8 +41,9 @@ public class MainGUI extends JFrame {
 	private JButton btn_4J, btn_4I, btn_4H, btn_4G, btn_4F, btn_4E, btn_4D, btn_4C, btn_4B, btn_4A;
 	private JButton btn_COMM1, btn_COMM2, btn_COMM3, btn_COMM4;
 	private JButton btn_P1, btn_P2, btn_P3, btn_P4, btn_P5, btn_P6, btn_P7, btn_P8, btn_P9;
-	
+	DefaultTableModel tableModel;
 	private ArrayList<JButton> buttons;
+	private JTable table;
 	
 
 	public static void main(String[] args) {
@@ -84,6 +88,24 @@ public class MainGUI extends JFrame {
 		
 		JMenuItem mntmExportToCsv = new JMenuItem("Export to CSV");
 		mnExport.add(mntmExportToCsv);
+		
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		JMenuItem mntmBuildingView = new JMenuItem("Building View");
+		mnView.add(mntmBuildingView);
+		
+		mntmTableView = new JMenuItem("Table View");
+		mnView.add(mntmTableView);
+		
+		JMenu mnSettings = new JMenu("Settings");
+		menuBar.add(mnSettings);
+		
+		JMenuItem mntmNewMenItem = new JMenuItem("Room Names");
+		mnSettings.add(mntmNewMenItem);
+		
+		JMenuItem mntmRoomparkingPrices = new JMenuItem("Room/Parking Prices");
+		mnSettings.add(mntmRoomparkingPrices);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -128,7 +150,6 @@ public class MainGUI extends JFrame {
 		
 		card_container = new JPanel();
 		card_container.setBounds(172, 11, 641, 387);
-		card_container.setLayout(new CardLayout());
 		contentPane.add(card_container);
 		
 		two = new JLabel("Second Floor");
@@ -156,6 +177,7 @@ public class MainGUI extends JFrame {
 		card4 = new JPanel();
 		card4.setLayout(null);
 		card4.add(four);
+		card_container.setLayout(new CardLayout(0, 0));
 		
 		comm = new JLabel("Commercial");
 		comm.setBounds(270, 22, 108, 25);
@@ -396,9 +418,27 @@ public class MainGUI extends JFrame {
 		btn_4E.setBounds(359, 176, 57, 45);
 		buttons.add(btn_4E);
 		card4.add(btn_4E);
+		
+		JPanel tableView = new JPanel();
+		card_container.add(tableView, "TABLEVIEW");
+		
+		
 
+		String col[] = new String[]{"Unit", "Name", "Contract Start", "Parking", "Rent Due", "Rent Amount"};
+		tableModel = new DefaultTableModel(col, 0);
+		
+		table = new JTable(tableModel);
+		tableView.add(table);
+		
 	}
 	
+	public JTable getTableView() {
+		return this.table;
+	}
+	
+	public DefaultTableModel getTableModel() {
+		return this.tableModel;
+	}
 	
 	public void btnSecondFloorListener(ActionListener listenerForBtnSecondFloor) {
 		second_floor.addActionListener(listenerForBtnSecondFloor);
@@ -487,6 +527,10 @@ public class MainGUI extends JFrame {
 				button.addActionListener(listenerForUnitButtons);
 			}
 		}
+	}
+	
+	public void addBtnActionListenersTableView(ActionListener listenerForTableView) {
+		mntmTableView.addActionListener(listenerForTableView);
 	}
 	
 	public void btnTaken(String btn) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 public class RenTrackingController {
 
@@ -13,8 +14,12 @@ public class RenTrackingController {
 	private DetailsGUI detailsGUI;
 	private ArrayList<Room> rooms;
 	
+	private DefaultTableModel tableModel;
+	
 	public RenTrackingController(MainGUI mainGUI, ArrayList<Room> rooms) {
-
+		tableModel = mainGUI.getTableModel();
+		String col[] = {"Unit", "Name", "Contract Start", "Parking", "Rent Due", "Rent Amount"};
+		tableModel.addRow(col);
 		this.mainGUI = mainGUI;
 		this.rooms = rooms;
 		
@@ -31,6 +36,8 @@ public class RenTrackingController {
 		mainGUI.addBtnActionListeners2ndFloor(new ListenerForUnitButtons());
 		mainGUI.addBtnActionListeners3rdFloor(new ListenerForUnitButtons());
 		mainGUI.addBtnActionListeners4thFloor(new ListenerForUnitButtons());
+		
+		mainGUI.addBtnActionListenersTableView(new ListenerForTableView());
 		
 		detailsGUI.btnSaveListener(new ListenerForBtnSave());
 		detailsGUI.btnDeleteListener(new ListenerForBtnDelete());
@@ -128,6 +135,8 @@ public class RenTrackingController {
 			if(index < 0) {
 				Room room = new Room(unit,tenantName, contractStrt, rentAmt, rentDue, parking);
 				rooms.add(room);
+				Object[] tableData = {unit, tenantName, contractStrt, parking, rentDue, rentAmt};
+				tableModel.addRow(tableData);
 				mainGUI.btnTaken(unit);
 				detailsGUI.setVisible(false);
 				
@@ -181,6 +190,17 @@ public class RenTrackingController {
 		@Override
 		public void changedUpdate(DocumentEvent e) {
 			detailsGUI.getSaveBtn().setEnabled(true);
+			
+		}
+		
+	}
+	
+	class ListenerForTableView implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mainGUI.getLayout().show(mainGUI.getCardContainer(), "TABLEVIEW");
+			System.out.println("hello");
 			
 		}
 		
