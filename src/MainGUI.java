@@ -4,12 +4,14 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -19,6 +21,8 @@ import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -26,6 +30,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 
 //hello im in git
 
@@ -103,9 +109,6 @@ public class MainGUI extends JFrame {
 		
 		JMenuItem mntmNewMenItem = new JMenuItem("Room Names");
 		mnSettings.add(mntmNewMenItem);
-		
-		JMenuItem mntmRoomparkingPrices = new JMenuItem("Room/Parking Prices");
-		mnSettings.add(mntmRoomparkingPrices);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -422,13 +425,22 @@ public class MainGUI extends JFrame {
 		JPanel tableView = new JPanel();
 		card_container.add(tableView, "TABLEVIEW");
 		
-		
 
 		String col[] = new String[]{"Unit", "Name", "Contract Start", "Parking", "Rent Due", "Rent Amount"};
 		tableModel = new DefaultTableModel(col, 0);
 		
 		table = new JTable(tableModel);
-		tableView.add(table);
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+
+		tableView.add(scrollPane);
+		
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+		table.setRowSorter(sorter);
+
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+		sorter.setSortKeys(sortKeys);
 		
 	}
 	

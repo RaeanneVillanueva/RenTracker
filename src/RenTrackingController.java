@@ -18,8 +18,7 @@ public class RenTrackingController {
 	
 	public RenTrackingController(MainGUI mainGUI, ArrayList<Room> rooms) {
 		tableModel = mainGUI.getTableModel();
-		String col[] = {"Unit", "Name", "Contract Start", "Parking", "Rent Due", "Rent Amount"};
-		tableModel.addRow(col);
+		
 		this.mainGUI = mainGUI;
 		this.rooms = rooms;
 		
